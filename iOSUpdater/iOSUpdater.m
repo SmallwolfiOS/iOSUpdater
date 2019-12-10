@@ -42,7 +42,7 @@
 #pragma mark - PublicFunctions
 - (void)checkVersion {
     if (!_window) {
-        NSLog(@"[Harpy]: Please make sure that you have set _presentationViewController before calling checkVersion, checkVersionDaily, or checkVersionWeekly.");
+        NSLog(@"[iOSUpdater]: Please make sure that you have set _presentationViewController before calling checkVersion, checkVersionDaily, or checkVersionWeekly.");
     } else {
         [self performVersionCheck];
     }
@@ -50,6 +50,7 @@
 #pragma mark - Helpers
 - (void)performVersionCheck {
     NSURL *storeURL = [self itunesURL];
+    storeURL = [NSURL URLWithString:@"https://itunes.apple.com/cn/lookup?id=xxwolo.com.master"];
     NSURLRequest *request = [NSMutableURLRequest requestWithURL:storeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
@@ -120,7 +121,7 @@
     NSURLComponents *components = [NSURLComponents new];
     components.scheme = @"https";
     components.host = @"itunes.apple.com";
-    components.path = @"/lookup";
+    components.path = @"/cn/lookup";
 
     NSMutableArray<NSURLQueryItem *> *items = [@[[NSURLQueryItem queryItemWithName:@"bundleId" value:[NSBundle mainBundle].bundleIdentifier]] mutableCopy];
     components.queryItems = items;
@@ -201,11 +202,11 @@
 
         case UpdaterAlertTypeOption: {
 
-            UIAlertController *alertController = [self createAlertController];
+//            UIAlertController *alertController = [self createAlertController];
 //            [alertController addAction:[self nextTimeAlertAction]];
 //            [alertController addAction:[self updateAlertAction]];
 
-            [self showAlertController:alertController];
+//            [self showAlertController:alertController];
 
         } break;
 
@@ -270,19 +271,19 @@
     _appName = _appName ? _appName : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey];
 
     // Force localization if _forceLanguageLocalization is set
-    if (_forceLanguageLocalization) {
-        _updateAvailableMessage = [self forcedLocalizedStringForKey:@"Update Available"];
-        _theNewVersionMessage = [NSString stringWithFormat:[self forcedLocalizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
-        _updateButtonText = [self forcedLocalizedStringForKey:@"Update"];
-        _nextTimeButtonText = [self forcedLocalizedStringForKey:@"Next time"];
-        _skipButtonText = [self forcedLocalizedStringForKey:@"Skip this version"];
-    } else {
-        _updateAvailableMessage = [self localizedStringForKey:@"Update Available"];
-        _theNewVersionMessage = [NSString stringWithFormat:[self localizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
-        _updateButtonText = [self localizedStringForKey:@"Update"];
-        _nextTimeButtonText = [self localizedStringForKey:@"Next time"];
-        _skipButtonText = [self localizedStringForKey:@"Skip this version"];
-    }
+//    if (_forceLanguageLocalization) {
+//        _updateAvailableMessage = [self forcedLocalizedStringForKey:@"Update Available"];
+//        _theNewVersionMessage = [NSString stringWithFormat:[self forcedLocalizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
+//        _updateButtonText = [self forcedLocalizedStringForKey:@"Update"];
+//        _nextTimeButtonText = [self forcedLocalizedStringForKey:@"Next time"];
+//        _skipButtonText = [self forcedLocalizedStringForKey:@"Skip this version"];
+//    } else {
+//        _updateAvailableMessage = [self localizedStringForKey:@"Update Available"];
+//        _theNewVersionMessage = [NSString stringWithFormat:[self localizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
+//        _updateButtonText = [self localizedStringForKey:@"Update"];
+//        _nextTimeButtonText = [self localizedStringForKey:@"Next time"];
+//        _skipButtonText = [self localizedStringForKey:@"Skip this version"];
+//    }
 }
 
 @end

@@ -19,6 +19,15 @@ typedef NS_ENUM(NSUInteger, UpdaterAlertType){
 @property (nonatomic, assign) UpdaterAlertType alertType;
 @property (nonatomic, strong) NSString *appName;
 @property (nonatomic, strong) UIWindow * window;
+
+
+
++ (iOSUpdater *)shareInstance;
+- (void)checkVersion;
+
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END
