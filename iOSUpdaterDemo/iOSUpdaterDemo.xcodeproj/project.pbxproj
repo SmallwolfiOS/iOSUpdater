@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181969C2239F9679003A4BFD /* iOSUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 181969C1239F9679003A4BFD /* iOSUpdater.m */; };
 		18395817239F9554001EB26B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18395816239F9554001EB26B /* AppDelegate.m */; };
 		1839581A239F9554001EB26B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18395819239F9554001EB26B /* SceneDelegate.m */; };
 		1839581D239F9554001EB26B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1839581C239F9554001EB26B /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		181969C0239F9679003A4BFD /* iOSUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSUpdater.h; sourceTree = "<group>"; };
+		181969C1239F9679003A4BFD /* iOSUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iOSUpdater.m; sourceTree = "<group>"; };
 		18395812239F9554001EB26B /* iOSUpdaterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSUpdaterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18395815239F9554001EB26B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18395816239F9554001EB26B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,6 +45,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181969BF239F9679003A4BFD /* iOSUpdater */ = {
+			isa = PBXGroup;
+			children = (
+				181969C0239F9679003A4BFD /* iOSUpdater.h */,
+				181969C1239F9679003A4BFD /* iOSUpdater.m */,
+			);
+			name = iOSUpdater;
+			path = ../../iOSUpdater;
+			sourceTree = "<group>";
+		};
 		18395809239F9554001EB26B = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +74,7 @@
 		18395814239F9554001EB26B /* iOSUpdaterDemo */ = {
 			isa = PBXGroup;
 			children = (
+				181969BF239F9679003A4BFD /* iOSUpdater */,
 				18395815239F9554001EB26B /* AppDelegate.h */,
 				18395816239F9554001EB26B /* AppDelegate.m */,
 				18395818239F9554001EB26B /* SceneDelegate.h */,
@@ -150,6 +164,7 @@
 				18395817239F9554001EB26B /* AppDelegate.m in Sources */,
 				18395828239F9554001EB26B /* main.m in Sources */,
 				1839581A239F9554001EB26B /* SceneDelegate.m in Sources */,
+				181969C2239F9679003A4BFD /* iOSUpdater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
