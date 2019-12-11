@@ -68,11 +68,6 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
     if ([self isUpdateCompatibleWithDeviceOS:_appData]) {
         __typeof__(self) __weak weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-
-            // Store version comparison date
-//            weakSelf.lastVersionCheckPerformedOnDate = [NSDate date];
-//            [[NSUserDefaults standardUserDefaults] setObject:[self lastVersionCheckPerformedOnDate] forKey:HarpyDefaultStoredVersionCheckDate];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
             NSDictionary<NSString *, id> *results = [self.appData valueForKey:@"results"];
             NSString *releaseDateString = [[results valueForKey:@"currentVersionReleaseDate"] objectAtIndex:0];
             if (releaseDateString == nil) {
@@ -86,14 +81,14 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
                     weakSelf.appStoreVersion = [versionsInAppStore objectAtIndex:0];
                     if ([weakSelf isAppStoreVersionNewer:weakSelf.appStoreVersion]) {
                         [weakSelf appStoreVersionIsNewer:weakSelf.appStoreVersion];
-                    } else {
-//                        [self printDebugMessage:@"Currently installed version is newer."];//mahp
+                    }else{
+                        [self printDebugMessage:@"installed is newer"];//mahp
                     }
                 }
             }
         });
     } else {
-//        [self printDebugMessage:@"Device is incompatible with installed verison of iOS."];//mahp
+        [self printDebugMessage:@"Device is incompatible with installed verison of iOS."];//mahp
     }
 }
 - (NSURL *)itunesURL {
@@ -139,13 +134,20 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
     if (_appID == nil) {
         [self printDebugMessage:@"appID is nil, which means to the trackId key is missing from the JSON results that Apple returned for your bundleID. If a version of your app is in the store and you are seeing this message, please open up an issue http://github.com/ArtSabintsev/Harpy and provide as much detail about your app as you can. Thanks!"];
     } else {
-        __typeof__(self) __weak weakSelf = self;
-        [CC_UpdateView showUpdateViewSkip:YES UpdateBlock:^{
-            [self launchAppStore];
-        } SkipBlock:^{
-            [UserDefaults setValue:weakSelf.appStoreVersion forKey:SkippedVersion];
-            [UserDefaults synchronize];
-        }];
+        NSString * skipVersion = [UserDefaults stringForKey:SkippedVersion];
+        
+
+        if (skipVersion.length > 0 && [skipVersion compare:currentAppStoreVersion options:NSNumericSearch] == NSOrderedAscending) {
+             __typeof__(self) __weak weakSelf = self;
+             [CC_UpdateView showUpdateViewSkip:YES UpdateBlock:^{
+                 [self launchAppStore];
+             } SkipBlock:^{
+                 [UserDefaults setValue:weakSelf.appStoreVersion forKey:SkippedVersion];
+                 [UserDefaults synchronize];
+             }];
+        }
+        
+       
     }
 }
 #pragma mark - Logging
