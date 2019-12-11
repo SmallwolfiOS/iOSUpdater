@@ -7,8 +7,10 @@
 //
 
 #import "iOSUpdater.h"
-
+#import "CC_UpdateView.h"
 #define Decoder(x) [NSJSONSerialization JSONObjectWithData:x options:NSJSONReadingAllowFragments error:nil]
+NSString * const SkippedVersion         = @"User Decided To Skip Version Update Boolean";
+#define UserDefaults [NSUserDefaults standardUserDefaults]
 @interface iOSUpdater()
 
 @property (nonatomic, copy) NSString *installedVersion;
@@ -50,7 +52,7 @@
 #pragma mark - Helpers
 - (void)performVersionCheck {
     NSURL *storeURL = [self itunesURL];
-    storeURL = [NSURL URLWithString:@"https://itunes.apple.com/cn/lookup?id=xxwolo.com.master"];
+    storeURL = [NSURL URLWithString:@"https://itunes.apple.com/lookup?bundleId=com.cecelive.master"];
     NSURLRequest *request = [NSMutableURLRequest requestWithURL:storeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
@@ -64,9 +66,7 @@
 - (void)parseResults:(NSData *)data {
     _appData = Decoder(data);
     if ([self isUpdateCompatibleWithDeviceOS:_appData]) {
-
         __typeof__(self) __weak weakSelf = self;
-
         dispatch_async(dispatch_get_main_queue(), ^{
 
             // Store version comparison date
@@ -74,31 +74,10 @@
 //            [[NSUserDefaults standardUserDefaults] setObject:[self lastVersionCheckPerformedOnDate] forKey:HarpyDefaultStoredVersionCheckDate];
 //            [[NSUserDefaults standardUserDefaults] synchronize];
             NSDictionary<NSString *, id> *results = [self.appData valueForKey:@"results"];
-
-            /**
-             Checks to see when the latest version of the app was released.
-             If the release date is greater-than-or-equal-to `_showAlertAfterCurrentVersionHasBeenReleasedForDays`,
-             the user will prompted to update their app (if the version is newer - checked later on in this method).
-             */
-
             NSString *releaseDateString = [[results valueForKey:@"currentVersionReleaseDate"] objectAtIndex:0];
             if (releaseDateString == nil) {
                 return;
-            } else {
-//                NSInteger daysSinceRelease = [weakSelf daysSinceDateString:releaseDateString];
-//                if (!(daysSinceRelease >= weakSelf.showAlertAfterCurrentVersionHasBeenReleasedForDays)) {
-//                    NSString *message = [NSString stringWithFormat:@"Your app has been released for %ld days, but Harpy cannot prompt the user until %lu days have passed.", (long)daysSinceRelease, (unsigned long)weakSelf.showAlertAfterCurrentVersionHasBeenReleasedForDays];
-//                    [self printDebugMessage:message];
-//                    return;
-//                }
             }
-
-            /**
-             Current version that has been uploaded to the AppStore.
-             Used to contain all versions, but now only contains the latest version.
-             Still returns an instance of NSArray.
-             */
-
             NSArray *versionsInAppStore = [results valueForKey:@"version"];
             if (versionsInAppStore == nil) {
                 return;
@@ -121,7 +100,7 @@
     NSURLComponents *components = [NSURLComponents new];
     components.scheme = @"https";
     components.host = @"itunes.apple.com";
-    components.path = @"/cn/lookup";
+    components.path = @"/lookup";
 
     NSMutableArray<NSURLQueryItem *> *items = [@[[NSURLQueryItem queryItemWithName:@"bundleId" value:[NSBundle mainBundle].bundleIdentifier]] mutableCopy];
     components.queryItems = items;
@@ -160,9 +139,13 @@
     if (_appID == nil) {
         [self printDebugMessage:@"appID is nil, which means to the trackId key is missing from the JSON results that Apple returned for your bundleID. If a version of your app is in the store and you are seeing this message, please open up an issue http://github.com/ArtSabintsev/Harpy and provide as much detail about your app as you can. Thanks!"];
     } else {
-        [self localizeAlertStringsForCurrentAppStoreVersion:currentAppStoreVersion];
-        [self alertTypeForVersion:currentAppStoreVersion];
-        [self showAlertIfCurrentAppStoreVersionNotSkipped:currentAppStoreVersion];
+        __typeof__(self) __weak weakSelf = self;
+        [CC_UpdateView showUpdateViewSkip:YES UpdateBlock:^{
+            [self launchAppStore];
+        } SkipBlock:^{
+            [UserDefaults setValue:weakSelf.appStoreVersion forKey:SkippedVersion];
+            [UserDefaults synchronize];
+        }];
     }
 }
 #pragma mark - Logging
@@ -175,18 +158,19 @@
     #endif
 }
 #pragma mark - Alert Management
-- (void)showAlertIfCurrentAppStoreVersionNotSkipped:(NSString *)currentAppStoreVersion {//mahp
-    // Check if user decided to skip this version in the past
-//    NSString *storedSkippedVersion = [[NSUserDefaults standardUserDefaults] objectForKey:HarpyDefaultSkippedVersion];
-//
-//    if (![storedSkippedVersion isEqualToString:currentAppStoreVersion]) {
-//        [self showAlertWithAppStoreVersion:currentAppStoreVersion];
-//    } else {
-//        // Don't show alert.
-//        return;
-//    }
-}
 
+- (void)launchAppStore {
+    NSString *iTunesString = [NSString stringWithFormat:@"https://itunes.apple.com/app/id%@", [self appID]];
+    NSURL *iTunesURL = [NSURL URLWithString:iTunesString];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:iTunesURL options:@{} completionHandler:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:iTunesURL];
+        }
+    });
+}
 - (void)showAlertWithAppStoreVersion:(NSString *)currentAppStoreVersion {
     // Show Appropriate UIAlertView
     switch ([self alertType]) {
