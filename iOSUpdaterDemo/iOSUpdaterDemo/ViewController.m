@@ -2,12 +2,12 @@
 //  ViewController.m
 //  iOSUpdaterDemo
 //
-//  Created by Apple on 2019/12/10.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by Mahpon 2019/12/10.
+//  Copyright © 2019 Mahp. All rights reserved.
 //
 
 #import "ViewController.h"
-
+#import "iOSUpdater.h"
 @interface ViewController ()
 
 @end
@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 

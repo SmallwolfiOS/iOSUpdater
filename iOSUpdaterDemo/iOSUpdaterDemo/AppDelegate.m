@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  iOSUpdaterDemo
 //
-//  Created by Apple on 2019/12/10.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by Mahp on 2019/12/10.
+//  Copyright © 2019 Mahp. All rights reserved.
 //
 
 #import "AppDelegate.h"

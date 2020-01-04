@@ -2,8 +2,8 @@
 //  iOSUpdater.m
 //  iOSUpdaterDemo
 //
-//  Created by Apple on 2019/12/10.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by Mahp on 2019/12/10.
+//  Copyright © 2019 Mahp. All rights reserved.
 //
 
 #import "iOSUpdater.h"
@@ -12,7 +12,7 @@
 NSString * const SkippedVersion         = @"User Decided To Skip Version Update Boolean";
 #define UserDefaults [NSUserDefaults standardUserDefaults]
 @interface iOSUpdater()
-
+@property (nonatomic, assign) UpdaterAlertType alertType;
 @property (nonatomic, copy) NSString *installedVersion;
 @property (nonatomic, copy) NSString *appStoreVersion;
 @property (nonatomic, copy) NSString *appID;
@@ -42,7 +42,11 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
     return self;
 }
 #pragma mark - PublicFunctions
-- (void)checkVersion {
+- (void)checkVersionType:(UpdaterAlertType)type{
+    _alertType = type;
+    if (type == UpdaterAlertTypeNone) {
+        return;
+    }
     if (!_window) {
         NSLog(@"[iOSUpdater]: Please make sure that you have set _presentationViewController before calling checkVersion, checkVersionDaily, or checkVersionWeekly.");
     } else {
@@ -52,7 +56,7 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
 #pragma mark - Helpers
 - (void)performVersionCheck {
     NSURL *storeURL = [self itunesURL];
-    storeURL = [NSURL URLWithString:@"https://itunes.apple.com/lookup?bundleId=com.cecelive.master"];
+//    storeURL = [NSURL URLWithString:@"https://itunes.apple.com/lookup?bundleId=com.cecelive.master"];
     NSURLRequest *request = [NSMutableURLRequest requestWithURL:storeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
@@ -137,17 +141,16 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
         NSString * skipVersion = [UserDefaults stringForKey:SkippedVersion];
         
 
-        if (skipVersion.length > 0 && [skipVersion compare:currentAppStoreVersion options:NSNumericSearch] == NSOrderedAscending) {
+        if ((skipVersion.length && [skipVersion compare:currentAppStoreVersion options:NSNumericSearch] == NSOrderedAscending) || skipVersion == nil ||_alertType == UpdaterAlertTypeForce) {
              __typeof__(self) __weak weakSelf = self;
-             [CC_UpdateView showUpdateViewSkip:YES UpdateBlock:^{
+             BOOL skip = _alertType == UpdaterAlertTypeForce ? NO :YES;
+             [CC_UpdateView showUpdateViewSkip:skip UpdateBlock:^{
                  [self launchAppStore];
              } SkipBlock:^{
                  [UserDefaults setValue:weakSelf.appStoreVersion forKey:SkippedVersion];
                  [UserDefaults synchronize];
              }];
         }
-        
-       
     }
 }
 #pragma mark - Logging

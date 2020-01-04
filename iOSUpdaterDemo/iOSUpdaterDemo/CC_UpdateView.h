@@ -2,8 +2,8 @@
 //  CC_UpdateView.h
 //  iOSUpdaterDemo
 //
-//  Created by Apple on 2019/12/11.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by Mahp on 2019/12/11.
+//  Copyright © 2019 Mahp. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

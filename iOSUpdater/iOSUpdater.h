@@ -2,8 +2,8 @@
 //  iOSUpdater.h
 //  iOSUpdaterDemo
 //
-//  Created by Apple on 2019/12/10.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by Mahp on 2019/12/10.
+//  Copyright © 2019 Mahp. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,14 +16,14 @@ typedef NS_ENUM(NSUInteger, UpdaterAlertType){
 };
 
 @interface iOSUpdater : NSObject
-@property (nonatomic, assign) UpdaterAlertType alertType;
-@property (nonatomic, strong) NSString *appName;
+
+@property (nonatomic, strong) NSString * appName;
 @property (nonatomic, strong) UIWindow * window;
 
 
 
 + (iOSUpdater *)shareInstance;
-- (void)checkVersion;
+- (void)checkVersionType:(UpdaterAlertType)type;
 
 
 
