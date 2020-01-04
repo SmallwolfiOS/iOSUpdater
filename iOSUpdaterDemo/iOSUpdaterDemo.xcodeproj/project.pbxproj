@@ -90,6 +90,8 @@
 			children = (
 				181969C0239F9679003A4BFD /* iOSUpdater.h */,
 				181969C1239F9679003A4BFD /* iOSUpdater.m */,
+				181969C323A0A1CB003A4BFD /* CC_UpdateView.h */,
+				181969C423A0A1CB003A4BFD /* CC_UpdateView.m */,
 			);
 			name = iOSUpdater;
 			path = ../../iOSUpdater;
@@ -151,8 +153,6 @@
 				181969BF239F9679003A4BFD /* iOSUpdater */,
 				18395815239F9554001EB26B /* AppDelegate.h */,
 				18395816239F9554001EB26B /* AppDelegate.m */,
-				181969C323A0A1CB003A4BFD /* CC_UpdateView.h */,
-				181969C423A0A1CB003A4BFD /* CC_UpdateView.m */,
 				18395818239F9554001EB26B /* SceneDelegate.h */,
 				18395819239F9554001EB26B /* SceneDelegate.m */,
 				1839581B239F9554001EB26B /* ViewController.h */,
