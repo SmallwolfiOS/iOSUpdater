@@ -136,7 +136,7 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
     _appID = _appData[@"results"][0][@"trackId"];
 
     if (_appID == nil) {
-        [self printDebugMessage:@"appID is nil, which means to the trackId key is missing from the JSON results that Apple returned for your bundleID. If a version of your app is in the store and you are seeing this message, please open up an issue http://github.com/ArtSabintsev/Harpy and provide as much detail about your app as you can. Thanks!"];
+        [self printDebugMessage:@"appID is nil"];
     } else {
         NSString * skipVersion = [UserDefaults stringForKey:SkippedVersion];
         
@@ -157,7 +157,7 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
 
 - (void)printDebugMessage:(NSString * _Nonnull)message {
     #ifdef DEBUG
-         NSLog(@"[Harpy]: %@", message);
+         NSLog(@"[iOSUpdater]: %@", message);
     #else
         //do sth.
     #endif
@@ -176,103 +176,8 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
         }
     });
 }
-- (void)showAlertWithAppStoreVersion:(NSString *)currentAppStoreVersion {
-    // Show Appropriate UIAlertView
-    switch ([self alertType]) {
-
-        case UpdaterAlertTypeForce: {
-
-//            UIAlertController *alertController = [self createAlertController];
-//            [alertController addAction:[self updateAlertAction]];
-//
-//            [self showAlertController:alertController];
-
-        } break;
-
-        case UpdaterAlertTypeOption: {
-
-//            UIAlertController *alertController = [self createAlertController];
-//            [alertController addAction:[self nextTimeAlertAction]];
-//            [alertController addAction:[self updateAlertAction]];
-
-//            [self showAlertController:alertController];
-
-        } break;
-
-//        case HarpyAlertTypeSkip: {
-//
-//            UIAlertController *alertController = [self createAlertController];
-////            [alertController addAction:[self skipAlertAction]];
-////            [alertController addAction:[self nextTimeAlertAction]];
-////            [alertController addAction:[self updateAlertAction]];
-//
-//            [self showAlertController:alertController];
-//
-//        } break;
-
-        case UpdaterAlertTypeNone: { //If the delegate is set, pass a localized update message. Otherwise, do nothing.
-//            if ([self.delegate respondsToSelector:@selector(harpyDidDetectNewVersionWithoutAlert:)]) {
-//                [self.delegate harpyDidDetectNewVersionWithoutAlert:_theNewVersionMessage];
-//            }
-        } break;
-    }
-}
-
-- (void)showAlertController:(UIAlertController *)alertController {
-
-    if (_window != nil) {
-//        [_window presentViewController:alertController animated:YES completion:nil];
-//
-//        if (_alertControllerTintColor) {
-//            [alertController.view setTintColor:_alertControllerTintColor];
-//        }
-    }
-
-//    if ([self.delegate respondsToSelector:@selector(harpyDidShowUpdateDialog)]){
-//        [self.delegate harpyDidShowUpdateDialog];
-//    }
-}
 
 
-- (void)alertTypeForVersion:(NSString *)currentAppStoreVersion {
-    // Check what version the update is, major, minor or a patch
-    NSArray *oldVersionComponents = [[self installedVersion] componentsSeparatedByString:@"."];
-    NSArray *newVersionComponents = [currentAppStoreVersion componentsSeparatedByString: @"."];
 
-    BOOL oldVersionComponentIsProperFormat = (2 <= [oldVersionComponents count] && [oldVersionComponents count] <= 4);
-    BOOL newVersionComponentIsProperFormat = (2 <= [newVersionComponents count] && [newVersionComponents count] <= 4);
-
-//    if (oldVersionComponentIsProperFormat && newVersionComponentIsProperFormat) {
-//        if ([newVersionComponents[0] integerValue] > [oldVersionComponents[0] integerValue]) { // A.b.c.d
-//            if (_majorUpdateAlertType) _alertType = _majorUpdateAlertType;
-//        } else if ([newVersionComponents[1] integerValue] > [oldVersionComponents[1] integerValue]) { // a.B.c.d
-//            if (_minorUpdateAlertType) _alertType = _minorUpdateAlertType;
-//        } else if ((newVersionComponents.count > 2) && (oldVersionComponents.count <= 2 || ([newVersionComponents[2] integerValue] > [oldVersionComponents[2] integerValue]))) { // a.b.C.d
-//            if (_patchUpdateAlertType) _alertType = _patchUpdateAlertType;
-//        } else if ((newVersionComponents.count > 3) && (oldVersionComponents.count <= 3 || ([newVersionComponents[3] integerValue] > [oldVersionComponents[3] integerValue]))) { // a.b.c.D
-//            if (_revisionUpdateAlertType) _alertType = _revisionUpdateAlertType;
-//        }
-//    }
-}
-
-- (void)localizeAlertStringsForCurrentAppStoreVersion:(NSString *)currentAppStoreVersion {
-    // Reference App's name
-    _appName = _appName ? _appName : [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey];
-
-    // Force localization if _forceLanguageLocalization is set
-//    if (_forceLanguageLocalization) {
-//        _updateAvailableMessage = [self forcedLocalizedStringForKey:@"Update Available"];
-//        _theNewVersionMessage = [NSString stringWithFormat:[self forcedLocalizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
-//        _updateButtonText = [self forcedLocalizedStringForKey:@"Update"];
-//        _nextTimeButtonText = [self forcedLocalizedStringForKey:@"Next time"];
-//        _skipButtonText = [self forcedLocalizedStringForKey:@"Skip this version"];
-//    } else {
-//        _updateAvailableMessage = [self localizedStringForKey:@"Update Available"];
-//        _theNewVersionMessage = [NSString stringWithFormat:[self localizedStringForKey:@"A new version of %@ is available. Please update to version %@ now."], _appName, currentAppStoreVersion];
-//        _updateButtonText = [self localizedStringForKey:@"Update"];
-//        _nextTimeButtonText = [self localizedStringForKey:@"Next time"];
-//        _skipButtonText = [self localizedStringForKey:@"Skip this version"];
-//    }
-}
 
 @end

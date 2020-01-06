@@ -13,7 +13,7 @@
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     
     [iOSUpdater shareInstance].window = self.window;
-    [[iOSUpdater shareInstance] checkVersionType:UpdaterAlertTypeNone];
+    [[iOSUpdater shareInstance] checkVersionType:UpdaterAlertTypeOption];
     
 }
 

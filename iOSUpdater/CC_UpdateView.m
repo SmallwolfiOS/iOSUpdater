@@ -11,8 +11,9 @@
 // 屏幕宽高
 #define kScreenWidth                    ([UIScreen mainScreen].bounds.size.width)
 #define kScreenHeight                   ([UIScreen mainScreen].bounds.size.height)
+#define BundlePath                      [[NSBundle bundleForClass:NSClassFromString(@"iOSUpdater")] pathForResource:@"iOSUpdater" ofType:@"bundle"]
 
-#define BundlePath                      [[NSBundle mainBundle] pathForResource:@"iOSUpdater" ofType:@"bundle"]
+//#define BundlePath                      [[NSBundle mainBundle] pathForResource:@"iOSUpdater" ofType:@"bundle"]
 #define ImgPath(x)                      [BundlePath stringByAppendingPathComponent:x]
 #define ImageSource(x)                  [UIImage imageWithContentsOfFile:ImgPath(x)]
 @interface CC_UpdateView ()
@@ -33,6 +34,7 @@
 
 - (id)initWithShowSkip:(BOOL)showSkip{
     if (self = [super initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)]) {
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.ccLogoView];
         [self addSubview:self.titleLabel];
         [self addSubview:self.detailLabel];
