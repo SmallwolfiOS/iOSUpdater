@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "iOSUpdater"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.3"
   spec.summary      = "iOSUpdater  a little pod for iOS Update"
 
   # This description is used to generate tags and improve search results.
@@ -104,7 +104,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
+  spec.resources = "iOSUpdater/iOSUpdater.bundle"
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
