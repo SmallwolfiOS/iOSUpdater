@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1811C97523C30C9700FFC24D /* iOSUpdater.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1811C97423C30C9700FFC24D /* iOSUpdater.bundle */; };
 		181969C2239F9679003A4BFD /* iOSUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 181969C1239F9679003A4BFD /* iOSUpdater.m */; };
 		181969C523A0A1CB003A4BFD /* CC_UpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181969C423A0A1CB003A4BFD /* CC_UpdateView.m */; };
 		181969E123A0CEBA003A4BFD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 181969C823A0CEBA003A4BFD /* NSLayoutConstraint+MASDebugAdditions.m */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1811C97423C30C9700FFC24D /* iOSUpdater.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iOSUpdater.bundle; sourceTree = "<group>"; };
 		181969C0239F9679003A4BFD /* iOSUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSUpdater.h; sourceTree = "<group>"; };
 		181969C1239F9679003A4BFD /* iOSUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iOSUpdater.m; sourceTree = "<group>"; };
 		181969C323A0A1CB003A4BFD /* CC_UpdateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CC_UpdateView.h; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		181969BF239F9679003A4BFD /* iOSUpdater */ = {
 			isa = PBXGroup;
 			children = (
+				1811C97423C30C9700FFC24D /* iOSUpdater.bundle */,
 				181969C0239F9679003A4BFD /* iOSUpdater.h */,
 				181969C1239F9679003A4BFD /* iOSUpdater.m */,
 				181969C323A0A1CB003A4BFD /* CC_UpdateView.h */,
@@ -227,6 +230,7 @@
 				18395825239F9554001EB26B /* LaunchScreen.storyboard in Resources */,
 				18395822239F9554001EB26B /* Assets.xcassets in Resources */,
 				18395820239F9554001EB26B /* Main.storyboard in Resources */,
+				1811C97523C30C9700FFC24D /* iOSUpdater.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

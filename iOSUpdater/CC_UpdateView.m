@@ -11,9 +11,10 @@
 // 屏幕宽高
 #define kScreenWidth                    ([UIScreen mainScreen].bounds.size.width)
 #define kScreenHeight                   ([UIScreen mainScreen].bounds.size.height)
-#define ImageSource(x)                  [UIImage imageNamed:x]
 
-
+#define BundlePath                      [[NSBundle mainBundle] pathForResource:@"iOSUpdater" ofType:@"bundle"]
+#define ImgPath(x)                      [BundlePath stringByAppendingPathComponent:x]
+#define ImageSource(x)                  [UIImage imageWithContentsOfFile:ImgPath(x)]
 @interface CC_UpdateView ()
 @property (nonatomic,strong)UIImageView             * ccLogoView;
 @property (nonatomic,strong)UILabel                 * titleLabel;
@@ -74,7 +75,7 @@
 - (UIImageView *)ccLogoView{
     if (!_ccLogoView) {
         _ccLogoView = [[UIImageView alloc]init];
-        [_ccLogoView setImage:ImageSource(@"CC_Update_logo")];
+        [_ccLogoView setImage:[UIImage imageNamed:@"CC_Update_logo"]];//v此图片需要外部提供
     }
     return _ccLogoView;
 }
