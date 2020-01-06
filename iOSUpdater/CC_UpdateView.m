@@ -59,7 +59,7 @@
     [window.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:CC_UpdateView.class]) {
             [obj mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(kScreenHeight);
+                make.bottom.mas_equalTo(kScreenHeight);
             }];
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 [obj.superview layoutIfNeeded];
