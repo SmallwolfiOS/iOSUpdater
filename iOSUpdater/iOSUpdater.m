@@ -9,7 +9,7 @@
 #import "iOSUpdater.h"
 #import "CC_UpdateView.h"
 #define Decoder(x) [NSJSONSerialization JSONObjectWithData:x options:NSJSONReadingAllowFragments error:nil]
-NSString * const SkippedVersion         = @"User Decided To Skip Version Update Boolean";
+NSString * const SkippedVersionDayTime         = @"User Decided To Skip Version Update Interval";
 #define UserDefaults [NSUserDefaults standardUserDefaults]
 @interface iOSUpdater()
 @property (nonatomic, assign) UpdaterAlertType alertType;
@@ -138,20 +138,26 @@ NSString * const SkippedVersion         = @"User Decided To Skip Version Update 
     if (_appID == nil) {
         [self printDebugMessage:@"appID is nil"];
     } else {
-        NSString * skipVersion = [UserDefaults stringForKey:SkippedVersion];
-        
-
-        if ((skipVersion.length && [skipVersion compare:currentAppStoreVersion options:NSNumericSearch] == NSOrderedAscending) || skipVersion == nil ||_alertType == UpdaterAlertTypeForce) {
+        NSString * skipTime = [UserDefaults stringForKey:SkippedVersionDayTime];
+        if ((skipTime.length && [skipTime compare:[self TodayString]] == NSOrderedAscending) || skipTime == nil ||_alertType == UpdaterAlertTypeForce) {
              __typeof__(self) __weak weakSelf = self;
              BOOL skip = _alertType == UpdaterAlertTypeForce ? NO :YES;
              [CC_UpdateView showUpdateViewSkip:skip UpdateBlock:^{
                  [self launchAppStore];
              } SkipBlock:^{
-                 [UserDefaults setValue:weakSelf.appStoreVersion forKey:SkippedVersion];
+                 [UserDefaults setValue:[weakSelf TodayString] forKey:SkippedVersionDayTime];
                  [UserDefaults synchronize];
              }];
         }
     }
+}
+- (NSString *)TodayString{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYYMMdd"];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
+
+    NSString *currentTimeString = [formatter stringFromDate:[NSDate date]];
+    return currentTimeString;
 }
 #pragma mark - Logging
 
