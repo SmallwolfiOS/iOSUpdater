@@ -12,8 +12,6 @@
 #define kScreenWidth                    ([UIScreen mainScreen].bounds.size.width)
 #define kScreenHeight                   ([UIScreen mainScreen].bounds.size.height)
 #define BundlePath                      [[NSBundle bundleForClass:NSClassFromString(@"iOSUpdater")] pathForResource:@"iOSUpdater" ofType:@"bundle"]
-
-//#define BundlePath                      [[NSBundle mainBundle] pathForResource:@"iOSUpdater" ofType:@"bundle"]
 #define ImgPath(x)                      [BundlePath stringByAppendingPathComponent:x]
 #define ImageSource(x)                  [UIImage imageWithContentsOfFile:ImgPath(x)]
 @interface CC_UpdateView ()
